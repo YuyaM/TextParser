@@ -18,10 +18,18 @@
 ##
 macro (AddOptimizeOption)
   if (TARGET_ARCH STREQUAL "INTEL_F_TCS")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Kfast  -Xg")
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Kfast  -Xg")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3  -Xg")
+    set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -O3  -Xg")
     if(enable_fapi)
-      set(CMAKE_Fortran_FLAGS "-Kfast")
+      set(CMAKE_Fortran_FLAGS "-O3")
+    endif()
+
+  elseif (TARGET_ARCH STREQUAL "Fugaku")
+    set(CMAKE_CXX_FLAGS     "${CMAKE_CXX_FLAGS}     -O3 -Nclang")
+    set(CMAKE_C_FLAGS       "${CMAKE_C_FLAGS}       -O3 -Nclang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    if(enable_fapi)
+      set(CMAKE_Fortran_FLAGS "-O3 -Nclang")
     endif()
 
   elseif (USE_F_TCS STREQUAL "YES")
